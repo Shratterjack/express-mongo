@@ -1,0 +1,22 @@
+{
+  "name": "express-mongo",
+  "version": "1.0.0",
+  "description": "\"building rest api using mongo and express\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shratterjack/express-mongo.git"
+  },
+  "author": "\"Shreyansh Shekhar\"",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shratterjack/express-mongo/issues"
+  },
+  "homepage": "https://github.com/Shratterjack/express-mongo#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

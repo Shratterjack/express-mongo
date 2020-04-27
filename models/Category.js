@@ -37,11 +37,56 @@ class Category {
             info: null
         }
 
-        const col = db.collection('category');
         try {
+            const col = db.collection('category');
+
             let categoryArray = await col.find(params, { '_id': 0, 'name': 1, 'ancestors.value': 1, 'ancestors.name': 1 }).toArray();
             statusMessage.status = true;
             statusMessage.info = categoryArray;
+        } catch (error) {
+            statusMessage.info = error.errmsg;
+        }
+        return statusMessage;
+
+    }
+
+    async fetchParentChildCategories(params = null){
+
+        const db = this.db;
+
+        var statusMessage = {
+            status: false,
+            info: null
+        }
+
+        try {
+            const col = db.collection('category');
+
+            let subCategories = await col.aggregate([{
+                $graphLookup: {
+                    from: 'category',
+                    startWith: "$value",
+                    connectFromField: 'value',
+                    connectToField: "parent",
+                    as: 'child_category'
+                }
+            },{
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    value: 1,
+                    product_id: 1,
+                    "child_category._id": 1,
+                    "child_category.name": 1,
+                    "child_category.value": 1,
+                    "child_category.product_id": 1 
+            }
+            }]).toArray();
+
+         
+            statusMessage.status = true;
+            statusMessage.info = subCategories;
+            
         } catch (error) {
             statusMessage.info = error.errmsg;
         }

@@ -4,6 +4,7 @@ class Category {
         this.db = db;
     }
 
+// validates whether category parameters are correct or not
     async validateName(params){
         var flag = false;
         var statusMessage = {
@@ -29,6 +30,7 @@ class Category {
         return statusMessage;
     }
 
+// fetches categories from the collection based on the query sent
     async fetchCategory(params) {
         const db = this.db;
 
@@ -50,6 +52,7 @@ class Category {
 
     }
 
+// used for adding categories with their child categories
     async fetchParentChildCategories(params = null){
 
         const db = this.db;
@@ -94,7 +97,7 @@ class Category {
 
     }
 
-
+// generated the ancestor array for a child category
     async formatAncestorArray(postData){
 
         let ancestorArray = [];
@@ -129,6 +132,7 @@ class Category {
 
     }
 
+// used for adding category/child category
     async addCategory(postData){
 
         const db = this.db;

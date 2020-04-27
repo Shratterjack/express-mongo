@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
 });
 
 
-
+// used for adding categories
 router.post('/addCategory', function (req, res, next) {
 
   mongoConn.then(db => {
@@ -32,6 +32,7 @@ router.post('/addCategory', function (req, res, next) {
 
 });
 
+// used for adding categories with their child categories
 router.get('/fetchAllCategories', function (req, res, next) {
 
   mongoConn.then(db => {
@@ -52,6 +53,7 @@ router.get('/fetchAllCategories', function (req, res, next) {
 
 });
 
+// used for adding product by mapping it to category
 router.post('/addProduct', function (req, res, next) {
   mongoConn.then(db => {
 
@@ -70,6 +72,7 @@ router.post('/addProduct', function (req, res, next) {
   });
 });
 
+// // used for fetching products by filter by category
 router.get('/filterProductByCategory', function (req, res, next) {
   mongoConn.then(db => {
 
@@ -88,18 +91,6 @@ router.get('/filterProductByCategory', function (req, res, next) {
   });
 });
 
-router.put('/updateProduct', function (req, res, next) {
-  const db_name = "nodetest1";
-  const db = client.db(db_name);
-
-  const col = db.collection('usercollection');
-  col.find({ "username": "testuser1" }).toArray().then(results => {
-    console.log(results);
-
-  }).catch(
-    error => console.log(error)
-  )
-});
 
 
 

@@ -5,6 +5,7 @@ class Product{
         this.db = db;
     }
 
+    // generates the primary product ID
     async generateProductId(){
         const db = this.db;
 
@@ -28,6 +29,7 @@ class Product{
 
     }
 
+    // validates whether all product parameters have been sent properly
     async validateProduct(params) {
         var flag = false;
         var statusMessage = {
@@ -53,6 +55,7 @@ class Product{
         return statusMessage;
     }
 
+    // function that returns products filtered by a category
     async getProductsByCategory(params){
         const db = this.db;
 
@@ -74,6 +77,7 @@ class Product{
         return statusMessage;
     }
 
+// function to add product in a collection
     async addProduct(postData){
         const db = this.db;
 

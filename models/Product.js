@@ -131,61 +131,6 @@ class Product{
         
     }
 
-    async updateProductDetails(postData){
-        const db = this.db;
-
-        var statusMessage = {
-            status: false,
-            info: null
-        }
-
-        try {
-            let validCheck = await this.validateProduct(postData);
-
-            if (validCheck.status) {
-                var productCol = db.collection('product');
-                var categoryCol = db.collection('category');
-
-                let product_id = await this.generateProductId();
-
-                let product = {
-                    product_id: product_id.info,
-                    name: postData.name,
-                    price: postData.price,
-                    category: []
-                }
-
-                let categoryArray = await categoryCol.find({ name: postData.category }, { _id: 0, name: 1, value: 1, ancestor: 0 }).toArray();
-                if (categoryArray.length == 0) {
-                    statusMessage.info = "Category doesn't exist";
-                }
-                else {
-                    let innerArray = {};
-                    innerArray.name = categoryArray[0].name;
-                    innerArray.value = categoryArray[0].value;
-                    product.category.push(innerArray);
-
-                    let insertResponse = await productCol.insertOne((product));
-                    if (insertResponse.result.ok == 1) {
-                        // for creating unique index on category name over each document insert
-                        let indexCreate = await productCol.createIndex({ "product_id": 1 }, { unique: true });
-                        if (indexCreate) {
-                            statusMessage.status = true;
-                            statusMessage.info = "Product Added";
-                        }
-                    }
-                }
-            }
-            else {
-                statusMessage = validCheck;
-            }
-
-        } catch (error) {
-            statusMessage.info = error.errmsg;
-        }
-
-        return statusMessage;
-    }
 
 }
 
